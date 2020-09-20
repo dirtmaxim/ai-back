@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<main>
+    {% if messages["processed_image"] != "" %}
+        <img src={{ messages["processed_image"] }}>
+    {% endif %}
+    <div id="status">{{ messages["status"] }}</div>
+</main>
+</body>
+</html>

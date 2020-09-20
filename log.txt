@@ -1,0 +1,291 @@
+Exception on /process [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 69, in process
+    K.set_session(classification_sess)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 400, in set_session
+    '`set_session` is not available '
+RuntimeError: `set_session` is not available when using TensorFlow 2.0.
+Exception on /process [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 71, in process
+    "static/cam.png", inference_model)
+  File "/mnt/NVME/Documents/Hackathon/classification/get_scores_CAM.py", line 126, in get_class_scores_cam
+    pathology_prob, diagnosed_diseases, cam_total_array, orig_img = get_cam_preds(inference_model, img)
+  File "/mnt/NVME/Documents/Hackathon/classification/get_scores_CAM.py", line 82, in get_cam_preds
+    last_conv_maps, prediction = inference_model.predict(img)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/keras/engine/training.py", line 1452, in predict
+    if self._uses_dynamic_learning_phase():
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/keras/engine/training.py", line 382, in _uses_dynamic_learning_phase
+    not isinstance(K.learning_phase(), int))
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 73, in symbolic_fn_wrapper
+    if _SYMBOLIC_SCOPE.value:
+AttributeError: '_thread._local' object has no attribute 'value'
+Exception on /process [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 59, in process
+    diagnosed_diseases[logical]) + "."
+TypeError: only integer scalar arrays can be converted to a scalar index
+Exception on /api/jpeg [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 77, in upload
+    original_stream.save("static/api.png")
+AttributeError: 'ImmutableMultiDict' object has no attribute 'save'
+Exception on /api/jpeg [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 85, in upload
+    return json.dumps({"Labels": pathology_probability[logical], "id": original_stream.filename})
+  File "/usr/lib/python3.6/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'ndarray' is not JSON serializable
+Exception on /process [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 65, in process
+    logical = pathology_probability > thresholds
+TypeError: '>' not supported between instances of 'Tensor' and 'numpy.ndarray'
+Exception on /process [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 64, in process
+    "static/{0}_cam.png".format(filename))
+  File "/mnt/NVME/Documents/Hackathon/model/dummy.py", line 20, in process
+    return np.array(result), \
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/torch/tensor.py", line 492, in __array__
+    return self.numpy()
+RuntimeError: Can't call numpy() on Variable that requires grad. Use var.detach().numpy() instead.
+Exception on /process [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 64, in process
+    "static/{0}_cam.png".format(filename))
+  File "/mnt/NVME/Documents/Hackathon/model/dummy.py", line 20, in process
+    return result.numpy(), \
+RuntimeError: Can't call numpy() on Variable that requires grad. Use var.detach().numpy() instead.
+Exception on /api [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 101, in api
+    logical = pathology_probability > thresholds
+TypeError: '>' not supported between instances of 'Tensor' and 'numpy.ndarray'
+Exception on /api [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 101, in api
+    logical = pathology_probability > thresholds
+TypeError: '>' not supported between instances of 'Tensor' and 'numpy.ndarray'
+Exception on /api [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 101, in api
+    logical = pathology_probability > thresholds
+TypeError: '>' not supported between instances of 'Tensor' and 'numpy.ndarray'
+Exception on /api [POST]
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/serving.py", line 124, in read_chunk_len
+    _len = int(line.strip(), 16)
+ValueError: invalid literal for int() with base 16: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 131, in wrapper
+    return f(self, stream, *args, **kwargs)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 253, in _parse_multipart
+    form, files = parser.parse(stream, boundary, content_length)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 584, in parse
+    return self.cls(form), self.cls(files)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/datastructures.py", line 419, in __init__
+    for key, value in mapping or ():
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 582, in <genexpr>
+    form = (p[1] for p in formstream if p[0] == "form")
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 537, in parse_parts
+    for ellt, ell in self.parse_lines(file, boundary, content_length):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 451, in parse_lines
+    terminator = self._find_terminator(iterator)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 368, in _find_terminator
+    for line in iterator:
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/wsgi.py", line 721, in make_line_iter
+    first_item = next(_iter, "")
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/wsgi.py", line 681, in _make_chunk_iter
+    item = _read(buffer_size)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/serving.py", line 137, in readinto
+    self._len = self.read_chunk_len()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/serving.py", line 126, in read_chunk_len
+    raise IOError("Invalid chunk header")
+OSError: Invalid chunk header
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/serving.py", line 124, in read_chunk_len
+    _len = int(line.strip(), 16)
+ValueError: invalid literal for int() with base 16: ''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/NVME/Documents/Hackathon/app.py", line 84, in api
+    original_stream = request.files[None]
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/utils.py", line 90, in __get__
+    value = self.func(obj)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/wrappers/base_request.py", line 514, in files
+    self._load_form_data()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/flask/wrappers.py", line 88, in _load_form_data
+    RequestBase._load_form_data(self)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/wrappers/base_request.py", line 319, in _load_form_data
+    self._get_stream_for_parsing(), mimetype, content_length, options
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 232, in parse
+    return parse_func(self, stream, mimetype, content_length, options)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/formparser.py", line 138, in wrapper
+    chunk = stream.read(1024 * 64)
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/serving.py", line 137, in readinto
+    self._len = self.read_chunk_len()
+  File "/home/maksym/.virtualenvs/ml/lib/python3.6/site-packages/werkzeug/serving.py", line 126, in read_chunk_len
+    raise IOError("Invalid chunk header")
+OSError: Invalid chunk header
