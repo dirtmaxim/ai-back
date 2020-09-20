@@ -1,17 +1,24 @@
 import numpy as np
 import torch
 import cv2
+import lungs_finder as lf  # pip install git+https://github.com/dirtmaxim/lungs-finder
+import matplotlib.pyplot as plt
+import os
 
 from albumentations.core.composition import *
 from albumentations.pytorch import ToTensor, ToTensorV2
 from albumentations.augmentations.transforms import *
+
+threshold = 0.5
+
+fake_images = ["./fake_images/"+img for img in os.listdir('./fake_images/')]
 
 preprocess = Compose([Normalize(mean=[0.485, 0.456, 0.406], std=[
                      0.229, 0.224, 0.225]), Resize(224, 224), ToTensorV2()])
 
 # ---------- HELPERS FOR VISUALIZATION
 """
-gradcam wrapper
+gradcam wrapperg
 """
 
 
@@ -109,7 +116,8 @@ def get_grad(model, img):
 
     out = gcam(img)
 
-    out[:, 1].backward()
+    mask = (out >= threshold)[0]
+    out[0:1, mask].sum().backward()
 
     grad = gcam.get(model.conv_head)
     grad = torch.nn.functional.interpolate(
@@ -131,7 +139,8 @@ def get_gbprop(model, img):
     gdbp = GuidedBackPropogation(model)
     inp_b = img.requires_grad_()  # Enable recording inp_b's gradient
     out_b = gdbp(inp_b)
-    out_b[:, 1].backward()
+    mask = (out_b >= threshold)[0]
+    out_b[0:1, mask].sum().backward()
 
     grad_b = gdbp.get(img)  # [N, 3, inpH, inpW]
     grad_b = grad_b.mean(dim=1, keepdim=True).abs()  # [N, 1, inpH, inpW]
@@ -141,7 +150,7 @@ def get_gbprop(model, img):
 
 def normalize(img):
     out = img-img.min()
-    out /= out.max()
+    out /= (out.max()+1e-7)
     return out
 
 
@@ -175,7 +184,7 @@ def load_model(ckpt_path):
     return model
 
 
-def convert_prediction_to_pathology(y_pred, threshold):
+def convert_prediction_to_pathology(y_pred):
     """
     this function is used to convert vector of anwers to vector of string representations
     e.g. [1,1,0,0,0,0,...] to ['Atelec...','Cadioomeg...']
@@ -219,6 +228,10 @@ def prepare_image(path_to_image):
     return image
 
 
+def prepare_fake():
+    return torch.stack([prepare_image(img) for img in fake_images]).squeeze()
+
+
 def predict_visual(model, path_to_image, isCuda=False):
     """
     function is used to predict labels and visualise image
@@ -231,6 +244,7 @@ def predict_visual(model, path_to_image, isCuda=False):
     # sadly, gbrop can not be extract at the same time as gradcam
     # so we have to do two predictions for the same image
     image = prepare_image(path_to_image)
+    image = torch.cat([image, prepare_fake()])
 
     if isCuda:
         image.to(torch.device('cuda'))
@@ -241,9 +255,31 @@ def predict_visual(model, path_to_image, isCuda=False):
     gbprop = get_gbprop(model, image)
 
     # plt.imshow((np.repeat(normalize(img.squeeze().detach().cpu().numpy())[:,:,np.newaxis],3,2)+plt.cm.hot(normalize(gbprop*grad).detach().cpu().numpy())[:,:,:3])/2)
-    visualization = normalize(gbprop*gcam).detach().cpu().numpy()
+    visualization = normalize((gbprop*gcam).detach().cpu().numpy())
+    visualization = normalize(visualization)
 
-    return pred, visualization
+    orig = (normalize(image.detach().cpu().numpy()
+                      [0, 0, :, :])*255).astype(np.uint8)
+
+    visualization = plt.get_cmap('hot')(visualization)[:, :, :3]
+
+    final = np.zeros(visualization.shape)
+    right_lung_haar_rectangle = lf.find_right_lung_haar(orig)
+    left_lung_haar_rectangle = lf.find_left_lung_haar(orig)
+
+    if (right_lung_haar_rectangle is not None) and (left_lung_haar_rectangle is not None):
+        x, y, width, height = right_lung_haar_rectangle
+        final[y:y + height, x:x + width] = visualization[y:y + height, x:x + width]
+        x, y, width, height = left_lung_haar_rectangle
+        final[y:y + height, x:x + width] = visualization[y:y + height, x:x + width]
+    else:
+        final = visualization
+
+    final = normalize(final +
+                      cv2.cvtColor(orig, cv2.COLOR_GRAY2RGB).astype(
+                          np.float32)/255)
+
+    return pred, final
 
 
 def predict(model, path_to_image, isCuda=False):
@@ -252,6 +288,7 @@ def predict(model, path_to_image, isCuda=False):
     isCuda: bool flag, set to Treu to run on gpu
     """
     image = prepare_image(path_to_image)
+    image = torch.cat([image, prepare_fake()])
 
     if isCuda:
         image.to(torch.device('cuda'))
