@@ -119,7 +119,7 @@ def get_grad(model, img):
     mask = (out >= threshold)[0]
     out[0:1, mask].sum().backward()
 
-    grad = gcam.get(model.conv_head)
+    grad = gcam.get(model.conv_head)[0:1]
     grad = torch.nn.functional.interpolate(
         grad, [224, 224], mode='bilinear', align_corners=False)
 
@@ -142,7 +142,7 @@ def get_gbprop(model, img):
     mask = (out_b >= threshold)[0]
     out_b[0:1, mask].sum().backward()
 
-    grad_b = gdbp.get(img)  # [N, 3, inpH, inpW]
+    grad_b = gdbp.get(img)[0:1]  # [N, 3, inpH, inpW]
     grad_b = grad_b.mean(dim=1, keepdim=True).abs()  # [N, 1, inpH, inpW]
 
     return grad_b.squeeze()
