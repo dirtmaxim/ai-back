@@ -4,7 +4,7 @@ import model.inferencer as inf
 import cv2
 import os
 
-model = inf.load_model("model/efficientnet.ckpt")
+model = inf.load_model("model/densenet121nobn.ckpt")
 
 
 def process(input_image, saved_cam=None):
