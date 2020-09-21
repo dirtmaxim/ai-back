@@ -1,4 +1,3 @@
-import shutil
 import numpy as np
 import model.inferencer as inf
 import cv2

@@ -6,5 +6,5 @@ albumentations~=0.4.6
 Flask~=1.1.2
 opencv-python
 dicompyler-core
-lungs-finder
+git+https://github.com/dirtmaxim/lungs-finder
 torchvision==0.6.1
