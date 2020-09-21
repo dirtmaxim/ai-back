@@ -321,7 +321,9 @@ def predict(model, path_to_image, isCuda=False):
 
     return model(image)[0]
 
+
 # ---------- SEMYON
+
 
 preprocess_semyon = A.Compose([A.Resize(256, 256),
                                A.Normalize(
@@ -429,6 +431,8 @@ def predict_semyon(model, path_to_image, isCuda=False):
     image = image.to(device)
     model.to(device)
 
+    model.eval()
+
     return model(image)[0]
 
 
@@ -447,6 +451,7 @@ def predict_visual_semyon(model, path_to_image, isCuda=False):
 
     image = image.to(device)
     model.to(device)
+    model.eval()
 
     image.require_grad = True
     pred, gcam = get_grad(model, image, dsize=[256, 256])
@@ -455,9 +460,10 @@ def predict_visual_semyon(model, path_to_image, isCuda=False):
     visualization = normalize((gcam).detach().cpu().numpy())
     visualization = normalize(visualization)
 
-    orig = (normalize(image.detach().cpu().numpy()[0, 0,:,:])*255).astype(np.uint8)
+    orig = (normalize(image.detach().cpu().numpy()
+                      [0, 0, :, :])*255).astype(np.uint8)
 
-    visualization = plt.get_cmap('hot')(visualization)[:, :,:3]
+    visualization = plt.get_cmap('hot')(visualization)[:, :, :3]
 
     final = np.zeros(visualization.shape)
     right_lung_haar_rectangle = lf.find_right_lung_haar(orig)
@@ -473,7 +479,7 @@ def predict_visual_semyon(model, path_to_image, isCuda=False):
 
     final = normalize(final +
                       cv2.cvtColor(orig, cv2.COLOR_GRAY2RGB).astype(
-            np.float32)/255)
+                          np.float32)/255)
 
     return pred, final
 
