@@ -81,7 +81,7 @@ def process():
 # Example of request: curl -F "=@/path/to/file/12345.jpg" http://127.0.0.1:5000/api
 @application.route("/api", methods=["POST"])
 def api():
-    original_stream = request.files[None]
+    original_stream = request.files['file']
     filename = os.path.splitext(original_stream.filename)[0]
 
     if os.path.splitext(original_stream.filename)[1] == ".dcm":

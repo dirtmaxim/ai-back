@@ -1,5 +1,5 @@
 numpy~=1.18.4
-torch~=1.5.0+cu101
+torch~=1.5.0
 matplotlib~=3.2.1
 scikit-image~=0.17.2
 albumentations~=0.4.6
@@ -7,3 +7,4 @@ Flask~=1.1.2
 opencv-python
 dicompyler-core
 lungs-finder
+torchvision==0.6.1
