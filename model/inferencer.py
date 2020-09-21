@@ -3,7 +3,8 @@ import torch
 import cv2
 import lungs_finder as lf  # pip install git+https://github.com/dirtmaxim/lungs-finder
 import matplotlib.pyplot as plt
-import os
+
+from skimage.color import rgb2gray, rgba2rgb, gray2rgb
 
 from albumentations.core.composition import *
 from albumentations.pytorch import ToTensor, ToTensorV2
@@ -11,10 +12,18 @@ from albumentations.augmentations.transforms import *
 
 threshold = 0.5
 
-fake_images = ["./fake_images/"+img for img in os.listdir('./fake_images/')]
 
-preprocess = Compose([Normalize(mean=[0.485, 0.456, 0.406], std=[
-                     0.229, 0.224, 0.225]), Resize(224, 224), ToTensorV2()])
+def normalizer(img, **params):
+    img = img.astype(np.float32)
+    if img.max() > 255:
+        img /= 65535.
+    elif img.max() > 1:
+        img /= 255.
+    return (img-0.5)*2
+
+
+preprocess = Compose(
+    [Lambda(image=normalizer), Resize(224, 224), ToTensorV2()])
 
 # ---------- HELPERS FOR VISUALIZATION
 """
@@ -112,14 +121,14 @@ def get_grad(model, img):
 
     torch.set_grad_enabled(True)
 
-    gcam = GradCam(model, [model.conv_head])
+    gcam = GradCam(model, [model.features])
 
     out = gcam(img)
 
     mask = (out >= threshold)[0]
     out[0:1, mask].sum().backward()
 
-    grad = gcam.get(model.conv_head)[0:1]
+    grad = gcam.get(model.features)[0:1]
     grad = torch.nn.functional.interpolate(
         grad, [224, 224], mode='bilinear', align_corners=False)
 
@@ -163,12 +172,10 @@ def load_model(ckpt_path):
     """
     function us used to load our model from checkpoint and return it
     """
-    torch.hub.list('rwightman/gen-efficientnet-pytorch', force_reload=False)
-    model = torch.hub.load(
-        'rwightman/gen-efficientnet-pytorch', 'efficientnet_b3', pretrained=True)
 
-    model.classifier = torch.nn.Sequential(
-        torch.nn.Linear(1536, 14), torch.nn.Sigmoid())
+    from densenet import densenet121
+
+    model = densenet121(num_classes=14)
 
     class Fixer(torch.nn.Module):
         def __init__(self, model):
@@ -219,17 +226,15 @@ def prepare_image(path_to_image):
     """
     image = cv2.imread(path_to_image).astype(float)
 
-    if image.ndim == 2 or (image.ndim == 3 and image.shape[2] == 1):
-        image = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-    elif image.ndim == 3 and image.shape[2] == 4:
-        image = image[:, :, :3]
+    if image.ndim == 3:
+        if image.shape[2] == 4:
+            image = rgb2gray(rgba2rgb(image))
+        else:
+            image = rgb2gray(image)
+    image = np.expand_dims(image, -1)
 
     image = preprocess(image=image)['image'].unsqueeze(0)
     return image
-
-
-def prepare_fake():
-    return torch.stack([prepare_image(img) for img in fake_images]).squeeze()
 
 
 def predict_visual(model, path_to_image, isCuda=False):
@@ -244,10 +249,9 @@ def predict_visual(model, path_to_image, isCuda=False):
     # sadly, gbrop can not be extract at the same time as gradcam
     # so we have to do two predictions for the same image
     image = prepare_image(path_to_image)
-    image = torch.cat([image, prepare_fake()])
 
     if isCuda:
-        image.to(torch.device('cuda'))
+        image = image.to(torch.device('cuda'))
         model.to(torch.device('cuda'))
 
     image.require_grad = True
@@ -288,10 +292,9 @@ def predict(model, path_to_image, isCuda=False):
     isCuda: bool flag, set to Treu to run on gpu
     """
     image = prepare_image(path_to_image)
-    image = torch.cat([image, prepare_fake()])
 
     if isCuda:
-        image.to(torch.device('cuda'))
+        image = image.to(torch.device('cuda'))
         model.to(torch.device('cuda'))
 
     return model(image)[0]
@@ -305,9 +308,9 @@ model = load_model("/home/alexander/work/hackathon/models/temp_models/_ckpt_epoc
 # --- prediction
 
 # visualization
-pred, vis = predict_visual(model,"/home/alexander/work/hackathon/chest-14/images/00014022_084.png") # cardiomegaly
+pred, vis = predict_visual(model,"/home/alexander/work/hackathon/chest-14/images/00014022_084.png", isCuda = True) # cardiomegaly
 
 # pure prediction
-pred = predict(model,"/home/alexander/work/hackathon/chest-14/images/00014022_084.png")
+pred = predict(model,"/home/alexander/work/hackathon/chest-14/images/00014022_084.png", isCuda = True)
 
 """
