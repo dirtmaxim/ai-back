@@ -4,7 +4,7 @@ import cv2
 import os
 
 model = inf.load_model("model/densenet121nobn.ckpt")
-model_semyon = inf.load_model_semyon("model/inceptionV3_BCELoss_fold2_epoch39.pth")
+model_semyon = inf.load_model_semyon("model/densenet_fold2_epoch29.pth")
 
 
 def process(input_image, saved_cam=None):
