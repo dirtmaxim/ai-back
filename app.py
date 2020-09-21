@@ -12,8 +12,8 @@ import time
 from logging import FileHandler, WARNING
 import json
 
-clear_directory = "static"
-list(map(os.unlink, (os.path.join(clear_directory, file) for file in os.listdir(clear_directory))))
+# clear_directory = "static"
+# list(map(os.unlink, (os.path.join(clear_directory, file) for file in os.listdir(clear_directory))))
 
 start = time.time()
 

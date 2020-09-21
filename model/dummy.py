@@ -17,7 +17,7 @@ def process(input_image, saved_cam=None):
         result = inf.predict(model, input_image)
 
     # 1 argument: probability, 2 argument: diseases.
-    return result.detach().numpy(), \
+    return result.detach().cpu().numpy(), \
            np.array(["Atelectasis",
                      "Cardiomegaly",
                      "Consolidation",

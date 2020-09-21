@@ -173,7 +173,7 @@ def load_model(ckpt_path):
     function us used to load our model from checkpoint and return it
     """
 
-    from densenet import densenet121
+    from model.densenet import densenet121
 
     model = densenet121(num_classes=14)
 
@@ -237,7 +237,7 @@ def prepare_image(path_to_image):
     return image
 
 
-def predict_visual(model, path_to_image, isCuda=False):
+def predict_visual(model, path_to_image, isCuda=True):
     """
     function is used to predict labels and visualise image
     
@@ -286,7 +286,7 @@ def predict_visual(model, path_to_image, isCuda=False):
     return pred, final
 
 
-def predict(model, path_to_image, isCuda=False):
+def predict(model, path_to_image, isCuda=True):
     """
     used to predit labels only (to speed up the process)
     isCuda: bool flag, set to Treu to run on gpu
