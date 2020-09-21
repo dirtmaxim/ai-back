@@ -181,7 +181,7 @@ def load_model(ckpt_path):
     function us used to load our model from checkpoint and return it
     """
 
-    from densenet import densenet121
+    from .densenet import densenet121
 
     model = densenet121(num_classes=14)
 
