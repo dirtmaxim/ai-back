@@ -19,7 +19,7 @@ from albumentations.pytorch import ToTensor, ToTensorV2
 from albumentations.augmentations.transforms import *
 
 threshold = 0.5
-
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def normalizer(img, **params):
     img = img.astype(np.float32)
@@ -258,9 +258,8 @@ def predict_visual(model, path_to_image, isCuda=False):
     # so we have to do two predictions for the same image
     image = prepare_image(path_to_image)
 
-    if isCuda:
-        image = image.to(torch.device('cuda'))
-        model.to(torch.device('cuda'))
+    image = image.to(device)
+    model.to(device)
 
     image.require_grad = True
     pred, gcam = get_grad(model, image)
@@ -301,9 +300,9 @@ def predict(model, path_to_image, isCuda=False):
     """
     image = prepare_image(path_to_image)
 
-    if isCuda:
-        image = image.to(torch.device('cuda'))
-        model.to(torch.device('cuda'))
+
+    image = image.to(device)
+    model.to(device)
 
     return model(image)[0]
 
@@ -318,9 +317,6 @@ preprocess_semyon = A.Compose([A.Resize(256, 256),
 ),
     ToTensor()
 ])
-
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
 
 def new_densenet121(imagenet=True, path_to_weights=None):
     net = torchvision.models.densenet121()
